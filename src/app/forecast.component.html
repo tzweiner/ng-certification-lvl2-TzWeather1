@@ -1,0 +1,33 @@
+<div class="container-fluid">
+
+  <div class="well">
+    <h2>Enter a zipcode:</h2>
+    <input class="form-control" placeholder="Zipcode" type="text" id="addLocation" [formControl]="zipCodeInput">
+    <br>
+    <button class="btn btn-primary" id="addLocationBtn" (click)="enterZipCode()">
+      Add location
+    </button>
+  </div>
+  <ng-container *ngIf="showDaily">
+    <div class="well flex" *ngIf="data$ | async as data">
+      <div>
+        <h3>{{data.name}} ({{this.currentZipCode}})</h3>
+        <h4>Current conditions: {{data.weather[0].main}}</h4>
+        <h4>Temperatures today:</h4>
+        <p>
+          Current {{data.main.temp | number : '1.0-0' }}
+          - Max {{data.main.temp_max | number : '1.0-0' }}
+          - Min {{data.main.temp_min | number : '1.0-0' }}
+        </p>
+        <p>
+          <a routerLink='{{"/forecast/" + currentZipCode}}'>Show 5-day forecast for {{data.name}}</a>
+        </p>
+      </div>
+      <div>
+        <span class="close" (click)="hideCurrent()">×</span>
+        <img src="https://www.angulartraining.com/images/weather/sun.png">
+      </div>
+    
+    </div>
+  </ng-container>
+</div>
